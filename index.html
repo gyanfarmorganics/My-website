@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>100 Organics — Processed with Purity, Delivered with Integrity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #2d6a4f; --green-light: #40916c; --green-pale: #d8f3dc;
+      --amber: #d4a017; --amber-light: #f5c842; --cream: #fdf6e3;
+      --brown: #7c4d00; --text: #1a1a1a; --muted: #5a5a5a; --white: #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--cream); overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(253,246,227,0.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e8dcc8; padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between; height: 68px;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--green); text-decoration: none; }
+    .logo .highlight { color: var(--amber); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta { background: var(--green); color: var(--white); border: none; padding: 0.55rem 1.4rem; border-radius: 50px; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.15s; text-decoration: none; }
+    .nav-cta:hover { background: var(--green-light); transform: translateY(-1px); }
+
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 45%, #40916c 100%);
+      display: flex; align-items: center; padding: 100px 5% 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .hero-content { max-width: 600px; position: relative; z-index: 2; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #b7e4c7; font-size: 0.8rem; font-weight: 500; padding: 6px 14px; border-radius: 50px; margin-bottom: 1.5rem; letter-spacing: 0.04em; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; color: var(--white); line-height: 1.18; margin-bottom: 1.2rem; }
+    .hero h1 em { color: var(--amber-light); font-style: normal; }
+    .hero p { font-size: 1.1rem; color: #b7e4c7; line-height: 1.7; margin-bottom: 2rem; max-width: 490px; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--amber); color: #1a1a1a; border: none; padding: 0.85rem 2rem; border-radius: 50px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+    .btn-primary:hover { background: var(--amber-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,160,23,0.4); }
+    .btn-outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.4); padding: 0.85rem 2rem; border-radius: 50px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+    .hero-visual { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: min(480px, 42vw); }
+    .hero-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(10px); border-radius: 20px; padding: 24px 20px; text-align: center; color: var(--white); transition: transform 0.3s; }
+    .hero-card:hover { transform: translateY(-4px); }
+    .hero-card:nth-child(2) { margin-top: 30px; }
+    .hero-card:nth-child(3) { margin-top: -15px; }
+    .hero-card .emoji { font-size: 2.4rem; display: block; margin-bottom: 8px; }
+    .hero-card strong { display: block; font-size: 0.95rem; font-weight: 600; }
+    .hero-card span { font-size: 0.78rem; color: #b7e4c7; }
+
+    .trust-strip { background: var(--green); padding: 18px 5%; display: flex; justify-content: center; gap: clamp(1.5rem, 4vw, 4rem); flex-wrap: wrap; }
+    .trust-item { display: flex; align-items: center; gap: 8px; color: #b7e4c7; font-size: 0.85rem; font-weight: 500; }
+
+    section { padding: 90px 5%; }
+    .section-label { display: inline-block; font-size: 0.78rem; font-weight: 600; color: var(--green); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.25; margin-bottom: 1rem; color: var(--text); }
+    .section-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 560px; }
+    .center { text-align: center; }
+    .center .section-sub { margin: 0 auto; }
+
+    .story { background: var(--white); }
+    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1100px; margin: 0 auto; }
+    .story-visual { position: relative; }
+    .story-img-main { width: 100%; border-radius: 24px; background: linear-gradient(135deg, #52b788, #2d6a4f); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; font-size: 6rem; }
+    .story-badge { position: absolute; bottom: -18px; right: -18px; background: var(--amber); color: var(--white); border-radius: 50%; width: 110px; height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 700; box-shadow: 0 8px 24px rgba(212,160,23,0.35); }
+    .story-badge .num { font-size: 1.6rem; line-height: 1; }
+    .story-badge .txt { font-size: 0.65rem; text-align: center; }
+    .story-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 2rem; }
+    .stat-box { background: var(--green-pale); border-radius: 16px; padding: 20px; text-align: center; }
+    .stat-box .val { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--green); }
+    .stat-box .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+    .story-content .section-sub { margin-bottom: 1.5rem; }
+    .story-points { list-style: none; }
+    .story-points li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.92rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.6; }
+    .story-points li::before { content: '✓'; color: var(--green-light); font-weight: 700; font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    .own-farm { background: var(--green-pale); }
+    .farm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 900px; margin: 2.5rem auto 0; }
+    .farm-card { background: var(--white); border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.07); transition: transform 0.25s; }
+    .farm-card:hover { transform: translateY(-5px); }
+    .farm-card-img { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 4.5rem; }
+    .farm-card-img.sugarcane { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .farm-card-img.moringa   { background: linear-gradient(135deg, #d1fae5, #86efac); }
+    .farm-card-body { padding: 24px; }
+    .farm-card-body h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: var(--green); }
+    .farm-card-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+    .farm-tag { display: inline-block; margin-top: 12px; background: var(--green); color: var(--white); font-size: 0.72rem; font-weight: 600; padding: 4px 12px; border-radius: 50px; }
+    .sourcing-note { background: var(--white); border: 2px solid #b7e4c7; border-radius: 20px; padding: 28px 32px; margin-top: 2.5rem; max-width: 900px; margin-left: auto; margin-right: auto; display: flex; gap: 18px; align-items: flex-start; }
+    .sourcing-note .note-icon { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+    .sourcing-note h4 { font-size: 1rem; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+    .sourcing-note p { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+
+    .products { background: var(--cream); }
+    .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    .product-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
+    .product-img { height: 200px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; }
+    .badge-organic { position: absolute; top: 12px; left: 12px; background: var(--green); color: var(--white); font-size: 0.68rem; font-weight: 600; padding: 4px 10px; border-radius: 50px; }
+    .badge-new { position: absolute; top: 12px; right: 12px; background: var(--amber); color: var(--white); font-size: 0.68rem; font-weight: 600; padding: 4px 10px; border-radius: 50px; }
+    .badge-own-farm { position: absolute; bottom: 12px; right: 12px; background: #1b4332; color: #b7e4c7; font-size: 0.65rem; font-weight: 600; padding: 4px 10px; border-radius: 50px; }
+    .product-body { padding: 20px; }
+    .product-body h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 6px; }
+    .product-body p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .price { font-size: 1.2rem; font-weight: 700; color: var(--green); }
+    .price span { font-size: 0.8rem; color: var(--muted); font-weight: 400; }
+    .add-btn { background: var(--green); color: var(--white); border: none; padding: 8px 18px; border-radius: 50px; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .add-btn:hover { background: var(--green-light); transform: scale(1.05); }
+    .bg-amber  { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .bg-green  { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+    .bg-brown  { background: linear-gradient(135deg, #fef3c7, #fcd9a0); }
+    .bg-yellow { background: linear-gradient(135deg, #fefce8, #fef08a); }
+    .bg-rose   { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+    .bg-moringa{ background: linear-gradient(135deg, #d1fae5, #6ee7b7); }
+
+    .process { background: var(--green); color: var(--white); }
+    .process .section-title { color: var(--white); }
+    .process .section-sub { color: #b7e4c7; }
+    .process .section-label { color: var(--amber-light); }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 3.5rem; }
+    .step { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 32px 24px; text-align: center; transition: background 0.2s; position: relative; }
+    .step:hover { background: rgba(255,255,255,0.14); }
+    .step-num { position: absolute; top: -14px; left: 24px; background: var(--amber); color: #1a1a1a; font-size: 0.8rem; font-weight: 800; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .step .icon { font-size: 2.4rem; margin-bottom: 14px; display: block; }
+    .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+    .step p { font-size: 0.83rem; color: #95d5b2; line-height: 1.6; }
+
+    .why { background: var(--white); }
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 3rem; }
+    .why-card { background: var(--cream); border-radius: 20px; padding: 32px 28px; border: 1px solid #e8dcc8; transition: all 0.25s; }
+    .why-card:hover { border-color: var(--green); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(45,106,79,0.1); }
+    .why-icon { width: 56px; height: 56px; border-radius: 14px; background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 18px; }
+    .why-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; }
+    .why-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+    .testimonials { background: var(--cream); }
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 3rem; }
+    .testi-card { background: var(--white); border-radius: 20px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .stars { color: var(--amber); font-size: 1rem; margin-bottom: 14px; }
+    .testi-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 18px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; color: var(--white); flex-shrink: 0; }
+    .testi-author strong { display: block; font-size: 0.88rem; }
+    .testi-author span { font-size: 0.78rem; color: var(--muted); }
+
+    .delivery { background: var(--green-pale); }
+    .delivery-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1000px; margin: 0 auto; }
+    .delivery-map { background: var(--white); border-radius: 24px; padding: 32px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .india-map { font-size: 7rem; display: block; margin-bottom: 12px; }
+    .delivery-map h3 { font-size: 1.2rem; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+    .delivery-map p { font-size: 0.85rem; color: var(--muted); }
+    .delivery-points { list-style: none; margin-top: 2rem; }
+    .delivery-points li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+    .dp-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--green); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .dp-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; }
+    .dp-text span { font-size: 0.83rem; color: var(--muted); }
+
+    .cta-banner { background: linear-gradient(135deg, #1b4332, #2d6a4f); padding: 80px 5%; text-align: center; color: var(--white); }
+    .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 1rem; }
+    .cta-banner p { color: #b7e4c7; margin-bottom: 2rem; font-size: 1rem; }
+    .cta-form { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; max-width: 500px; margin: 0 auto; }
+    .cta-form input { flex: 1; min-width: 200px; padding: 0.85rem 1.2rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.25); font-size: 0.9rem; outline: none; background: rgba(255,255,255,0.12); color: var(--white); }
+    .cta-form input::placeholder { color: #95d5b2; }
+
+    footer { background: #0a2218; color: #95d5b2; padding: 60px 5% 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand p { font-size: 0.85rem; color: #6aab84; line-height: 1.7; max-width: 260px; margin-top: 12px; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 18px; }
+    .social-btn { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; text-decoration: none; color: #95d5b2; }
+    .social-btn:hover { background: var(--green-light); }
+    footer h4 { color: var(--white); font-size: 0.9rem; font-weight: 600; margin-bottom: 16px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 10px; }
+    footer ul li a { color: #6aab84; font-size: 0.85rem; text-decoration: none; transition: color 0.2s; }
+    footer ul li a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 0.8rem; color: #4a7a5e; }
+
+    @media (max-width: 900px) {
+      .hero-visual { display: none; }
+      .story-grid, .delivery-inner, .farm-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .products-header { flex-direction: column; align-items: flex-start; }
+    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo"><span style="font-size:1.8rem;">🌿</span> 100 <span class="highlight">Organics</span></a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#farm">Our Farm</a></li>
+    <li><a href="#process">How We Make It</a></li>
+    <li><a href="#delivery">Delivery</a></li>
+  </ul>
+  <a href="#products" class="nav-cta">Shop Now</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-content reveal">
+    <div class="hero-badge">🌾 Organically Sourced · In-House Manufactured · Pan India</div>
+    <h1>Sourced Clean.<br/>Processed Pure.<br/><em>No Compromises.</em></h1>
+    <p>We source the finest organic ingredients — growing sugarcane and moringa on our own farm — and manufacture every product in-house to guarantee zero adulteration, from raw ingredient to sealed packet.</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-primary">Explore Products</a>
+      <a href="#story" class="btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card"><span class="emoji">🍬</span><strong>Own-Farm Jaggery</strong><span>Grown by us, made by us</span></div>
+    <div class="hero-card"><span class="emoji">🌿</span><strong>Own-Farm Moringa</strong><span>Chemical-free cultivation</span></div>
+    <div class="hero-card"><span class="emoji">🏭</span><strong>In-House Made</strong><span>Full quality control</span></div>
+    <div class="hero-card"><span class="emoji">🚚</span><strong>Pan India</strong><span>Doorstep delivery</span></div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="trust-item">✅ Zero Adulterants</div>
+  <div class="trust-item">🌱 Organically Sourced Ingredients</div>
+  <div class="trust-item">🏭 In-House Manufacturing</div>
+  <div class="trust-item">🚜 Own Farm: Sugarcane &amp; Moringa</div>
+  <div class="trust-item">📦 Pan India Delivery</div>
+</div>
+
+<section class="story" id="story">
+  <div class="story-grid">
+    <div class="story-visual reveal">
+      <div class="story-img-main">🏭</div>
+      <div class="story-badge"><span class="num">100%</span><span class="txt">Organic<br/>Ingredients</span></div>
+      <div class="story-stats">
+        <div class="stat-box"><div class="val">Own</div><div class="lbl">Sugarcane farm</div></div>
+        <div class="stat-box"><div class="val">Own</div><div class="lbl">Moringa farm</div></div>
+        <div class="stat-box"><div class="val">Zero</div><div class="lbl">Adulterants</div></div>
+        <div class="stat-box"><div class="val">Pan</div><div class="lbl">India delivery</div></div>
+      </div>
+    </div>
+    <div class="story-content reveal">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">Made with Integrity,<br/>Every Single Batch</h2>
+      <p class="section-sub">100 Organics was built on one conviction — Indians deserve food that is genuinely what it claims to be. We grow our own sugarcane and moringa, carefully source other organic ingredients, and manufacture everything ourselves so nothing is left to chance.</p>
+      <ul class="story-points">
+        <li>Sugarcane and moringa grown on our own farm — no pesticides, no chemicals</li>
+        <li>All other ingredients sourced exclusively from verified organic suppliers</li>
+        <li>Every incoming ingredient tested for purity before entering our facility</li>
+        <li>In-house manufacturing only — we never outsource production</li>
+        <li>No artificial colours, flavours, preservatives, or fillers — ever</li>
+        <li>Third-party lab testing on every batch before it ships</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="own-farm" id="farm">
+  <div class="center reveal">
+    <span class="section-label">Our Farm</span>
+    <h2 class="section-title">What We Grow Ourselves</h2>
+    <p class="section-sub">Two key crops at the heart of our products come directly from our own land — grown the traditional, chemical-free way.</p>
+  </div>
+  <div class="farm-grid">
+    <div class="farm-card reveal">
+      <div class="farm-card-img sugarcane">🌾</div>
+      <div class="farm-card-body">
+        <h3>Sugarcane</h3>
+        <p>Our sugarcane is grown without synthetic fertilisers or pesticides. It goes directly into our processing unit where it is cold-crushed and slow-boiled to produce pure, mineral-rich jaggery — preserving everything nature put in.</p>
+        <span class="farm-tag">🚜 Own Farm Grown</span>
+      </div>
+    </div>
+    <div class="farm-card reveal">
+      <div class="farm-card-img moringa">🌿</div>
+      <div class="farm-card-body">
+        <h3>Moringa</h3>
+        <p>Often called the "miracle tree", our moringa is cultivated naturally on our farm. Leaves are carefully harvested, shade-dried, and milled in-house into a nutrient-dense powder — retaining its full protein, iron, and antioxidant profile.</p>
+        <span class="farm-tag">🚜 Own Farm Grown</span>
+      </div>
+    </div>
+  </div>
+  <div class="sourcing-note reveal">
+    <div class="note-icon">🤝</div>
+    <div>
+      <h4>Everything Else — Responsibly Sourced</h4>
+      <p>For ingredients we don't grow ourselves — millets, sesame, dry fruits, spices — we work exclusively with trusted organic farmers and certified suppliers. Every incoming batch is verified for organic origin and tested for purity before entering our manufacturing facility. Honest sourcing is as important to us as honest manufacturing.</p>
+    </div>
+  </div>
+</section>
+
+<section class="products" id="products">
+  <div class="products-header reveal">
+    <div>
+      <span class="section-label">Our Products</span>
+      <h2 class="section-title">Pure Goodness,<br/>Honestly Manufactured</h2>
+    </div>
+    <a href="#contact" class="btn-primary" style="white-space:nowrap">Order Wholesale</a>
+  </div>
+  <div class="product-grid">
+
+    <div class="product-card reveal">
+      <div class="product-img bg-amber">
+        <span class="badge-organic">ORGANIC</span>
+        <span class="badge-own-farm">🚜 Own Farm</span>
+        🍯
+      </div>
+      <div class="product-body">
+        <h3>Traditional Block Jaggery</h3>
+        <p>Made from our own farm-grown sugarcane. Cold-crushed and slow-boiled in-house with zero chemicals — pure gur the way it should be.</p>
+        <div class="product-footer">
+          <div class="price">₹180 <span>/ 500g</span></div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img bg-yellow">
+        <span class="badge-organic">ORGANIC</span>
+        <span class="badge-own-farm">🚜 Own Farm</span>
+        ✨
+      </div>
+      <div class="product-body">
+        <h3>Jaggery Powder</h3>
+        <p>Our own sugarcane jaggery, finely milled in-house. A clean, unrefined alternative to refined sugar for everyday cooking.</p>
+        <div class="product-footer">
+          <div class="price">₹160 <span>/ 500g</span></div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img bg-moringa" style="background: linear-gradient(135deg,#d1fae5,#6ee7b7)">
+        <span class="badge-organic">ORGANIC</span>
+        <span class="badge-own-farm">🚜 Own Farm</span>
+        🌿
+      </div>
+      <div class="product-body">
+        <h3>Moringa Powder</h3>
+        <p>Shade-dried and cold-milled from our own moringa trees. High in protein, iron, and antioxidants — absolutely nothing added.</p>
+        <div class="product-footer">
+          <div class="price">₹200 <span>/ 200g</span></div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img bg-brown">
+        <span class="badge-organic">ORGANIC</span>
+        <span class="badge-new">BESTSELLER</span>
+        🌾
+      </div>
+      <div class="product-body">
+        <h3>Ragi Millet Laddoo</h3>
+        <p>Organic ragi from certified farmers, combined with our own jaggery and pure ghee. Handcrafted in-house — no preservatives.</p>
+        <div class="product-footer">
+          <div class="price">₹250 <span>/ 400g</span></div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img bg-green">
+        <span class="badge-organic">ORGANIC</span>
+        🌱
+      </div>
+      <div class="product-body">
+        <h3>Jowar Laddoo</h3>
+        <p>Organically sourced sorghum with sesame and cardamom, sweetened using our own jaggery. Gluten-free and gut-friendly.</p>
+        <div class="product-footer">
+          <div class="price">₹230 <span>/ 400g</span></div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img bg-amber" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8)">
+        <span class="badge-organic">ORGANIC</span>
+        🌸
+      </div>
+      <div class="product-body">
+        <h3>Bajra Laddoo</h3>
+        <p>Organic pearl millet with dry fruits and pure ghee, bound with our farm-made jaggery. Naturally rich in iron and protein.</p>
+        <div class="product-footer">
+          <div class="price">₹240 <span>/ 400g</span></div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="center reveal">
+    <span class="section-label">How We Make It</span>
+    <h2 class="section-title">From Ingredient to Packet —<br/>Every Step In Our Hands</h2>
+    <p class="section-sub">We control the entire manufacturing chain. No outsourcing, no shortcuts — just honest processing at every stage.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal"><div class="step-num">1</div><span class="icon">🌾</span><h3>Own Farm Harvest</h3><p>Sugarcane and moringa harvested from our own chemical-free fields at peak quality and nutrition.</p></div>
+    <div class="step reveal"><div class="step-num">2</div><span class="icon">🤝</span><h3>Organic Sourcing</h3><p>Millets, spices, and other ingredients sourced from verified organic suppliers and certified farms across India.</p></div>
+    <div class="step reveal"><div class="step-num">3</div><span class="icon">🔍</span><h3>Ingredient Testing</h3><p>Every incoming ingredient — own-farm or sourced — is tested for purity and organic integrity before production begins.</p></div>
+    <div class="step reveal"><div class="step-num">4</div><span class="icon">🏭</span><h3>In-House Manufacturing</h3><p>Our own facility handles all processing — crushing, boiling, milling, blending, and shaping — with no outsourcing whatsoever.</p></div>
+    <div class="step reveal"><div class="step-num">5</div><span class="icon">🔬</span><h3>Batch Quality Check</h3><p>Finished products undergo third-party lab testing for purity, nutrition, and safety before any batch is cleared for dispatch.</p></div>
+    <div class="step reveal"><div class="step-num">6</div><span class="icon">📦</span><h3>Pack &amp; Dispatch</h3><p>Tamper-proof, food-safe packaging. Shipped pan India with tracking — directly from our facility to you.</p></div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="center reveal">
+    <span class="section-label">Why 100 Organics</span>
+    <h2 class="section-title">The Promise We Keep</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal"><div class="why-icon">🚫</div><h3>Zero Adulterants</h3><p>No artificial colours, flavours, or preservatives — ever. Our process adds nothing that nature didn't put in first.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🌾</div><h3>Own Farm for Key Crops</h3><p>Sugarcane and moringa come straight from our own land. We know exactly how they were grown because we grew them.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🤝</div><h3>Vetted Organic Sourcing</h3><p>What we don't grow, we source responsibly — only from certified organic suppliers who share our standards for purity.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🏭</div><h3>100% In-House Manufacturing</h3><p>We never outsource production. Every product is made, tested, and packed within our own facility — full accountability.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🔬</div><h3>Lab Tested Every Batch</h3><p>Third-party testing on every production run. We stand behind our purity claims with data, not just words.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🌍</div><h3>Sustainable Practices</h3><p>Chemical-free farming on our land and a commitment to eco-friendly packaging — we care about what we leave behind.</p></div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="center reveal">
+    <span class="section-label">Customer Love</span>
+    <h2 class="section-title">What Our Customers Say</h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"The jaggery tastes exactly like what my grandmother used to make — you can tell it's been processed cleanly without any chemicals. Completely switched over to 100 Organics."</p>
+      <div class="testi-author"><div class="avatar" style="background:var(--green)">P</div><div><strong>Priya Sharma</strong><span>Bengaluru, Karnataka</span></div></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Love that they're transparent about their sourcing. The ragi laddoos are made with real organic ingredients — my kids eat them daily and I have zero worries about what's inside."</p>
+      <div class="testi-author"><div class="avatar" style="background:var(--amber)">R</div><div><strong>Rajesh Mehta</strong><span>Mumbai, Maharashtra</span></div></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"The moringa powder quality is exceptional — you can tell it's grown and processed properly with no fillers. Fast delivery to Hyderabad too. Will keep ordering!"</p>
+      <div class="testi-author"><div class="avatar" style="background:var(--brown)">A</div><div><strong>Ananya Verma</strong><span>Hyderabad, Telangana</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="delivery" id="delivery">
+  <div class="delivery-inner">
+    <div class="delivery-map reveal">
+      <span class="india-map">🇮🇳</span>
+      <h3>We Deliver Across India</h3>
+      <p>From Kashmir to Kanyakumari — every pin code reachable</p>
+      <div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+        <span style="background:var(--green-pale);color:var(--green);font-size:0.75rem;padding:4px 12px;border-radius:50px;font-weight:600;">North India ✓</span>
+        <span style="background:var(--green-pale);color:var(--green);font-size:0.75rem;padding:4px 12px;border-radius:50px;font-weight:600;">South India ✓</span>
+        <span style="background:var(--green-pale);color:var(--green);font-size:0.75rem;padding:4px 12px;border-radius:50px;font-weight:600;">East India ✓</span>
+        <span style="background:var(--green-pale);color:var(--green);font-size:0.75rem;padding:4px 12px;border-radius:50px;font-weight:600;">West India ✓</span>
+        <span style="background:var(--green-pale);color:var(--green);font-size:0.75rem;padding:4px 12px;border-radius:50px;font-weight:600;">NE India ✓</span>
+      </div>
+    </div>
+    <div class="reveal">
+      <span class="section-label">Delivery</span>
+      <h2 class="section-title">Manufactured Here.<br/>Delivered Everywhere.</h2>
+      <ul class="delivery-points">
+        <li><div class="dp-icon">⚡</div><div class="dp-text"><strong>Express Delivery</strong><span>Metro cities receive orders within 2–3 business days</span></div></li>
+        <li><div class="dp-icon">🌐</div><div class="dp-text"><strong>Pan India Reach</strong><span>We ship to all states and union territories across India</span></div></li>
+        <li><div class="dp-icon">📦</div><div class="dp-text"><strong>Safe Packaging</strong><span>Tamper-proof, moisture-resistant packs to preserve freshness and purity</span></div></li>
+        <li><div class="dp-icon">🏢</div><div class="dp-text"><strong>Bulk &amp; Wholesale Orders</strong><span>Special pricing available for stores, restaurants, and corporates</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner" id="contact">
+  <div class="reveal">
+    <span class="section-label" style="color:var(--amber-light)">Stay Connected</span>
+    <h2>Start Eating Honestly Today</h2>
+    <p>Subscribe for new product launches, sourcing updates, and exclusive early-bird offers from 100 Organics.</p>
+    <div class="cta-form">
+      <input type="email" placeholder="Enter your email address" />
+      <button class="btn-primary">Subscribe</button>
+    </div>
+    <p style="margin-top:1.5rem;font-size:0.85rem;color:#6aab84;">
+      📞 +91 98765 43210 &nbsp;|&nbsp; ✉️ hello@100organics.in &nbsp;|&nbsp; 🕘 Mon–Sat, 9 AM – 6 PM
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" style="display:inline-flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--white);text-decoration:none;">
+        <span style="font-size:1.8rem;">🌿</span> 100 <span style="color:var(--amber);">Organics</span>
+      </a>
+      <p>Organically sourced. In-house manufactured. Zero adulteration. Delivered pan India.</p>
+      <div class="footer-socials">
+        <a class="social-btn" href="#">📘</a>
+        <a class="social-btn" href="#">📸</a>
+        <a class="social-btn" href="#">🐦</a>
+        <a class="social-btn" href="#">▶️</a>
+      </div>
+    </div>
+    <div>
+      <h4>Products</h4>
+      <ul>
+        <li><a href="#">Block Jaggery</a></li>
+        <li><a href="#">Jaggery Powder</a></li>
+        <li><a href="#">Moringa Powder</a></li>
+        <li><a href="#">Ragi Laddoo</a></li>
+        <li><a href="#">Jowar Laddoo</a></li>
+        <li><a href="#">Bajra Laddoo</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Our Farm</a></li>
+        <li><a href="#">How We Source</a></li>
+        <li><a href="#">Lab Reports</a></li>
+        <li><a href="#">Wholesale</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Track Order</a></li>
+        <li><a href="#">Returns Policy</a></li>
+        <li><a href="#">Shipping Info</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 100 Organics. All rights reserved. Made with 🌿 integrity.</span>
+    <span>FSSAI Lic: 12345678901234 · Organic Certified</span>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const orig = this.textContent;
+      this.textContent = '✓ Added!'; this.style.background = '#40916c';
+      setTimeout(() => { this.textContent = orig; this.style.background = ''; }, 1500);
+    });
+  });
+
+  document.querySelector('.cta-form button').addEventListener('click', function() {
+    const input = document.querySelector('.cta-form input');
+    if (input.value.includes('@')) {
+      this.textContent = '✓ Subscribed!'; input.value = '';
+      setTimeout(() => this.textContent = 'Subscribe', 2000);
+    } else {
+      input.style.border = '1px solid #f87171';
+      setTimeout(() => input.style.border = '', 1500);
+    }
+  });
+</script>
+</body>
+</html>
